@@ -13,9 +13,13 @@ class StartPage extends StatelessWidget {
           children: <Widget>[
             Center(
               child: Container(
-                height: 120.0,
-                width: 120.0,
-                color: Colors.blue,
+                height: 180.0,
+                width: 180.0,
+                child: CircleAvatar(
+                  radius: 50,
+                  backgroundColor: Colors.transparent,
+                  backgroundImage: AssetImage('assets/icon.png'),
+                ),
               ),
             ),
             SizedBox(
