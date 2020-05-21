@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_car_brands_quiz/components/primary_button.dart';
 
 class StartPage extends StatelessWidget {
   static String routeName = 'start_page';
@@ -26,15 +27,9 @@ class StartPage extends StatelessWidget {
                   ),
                 ),
               ),
-              Container(
-                height: 50.0,
-                width: double.infinity,
-                decoration: BoxDecoration(color: Color(0XFF2D291E), borderRadius: BorderRadius.all(Radius.circular(9.0))),
-                child: FlatButton(
-                  onPressed: () {},
-                  child: Text('GET STARTED'),
-                  textColor: Colors.white,
-                ),
+              PrimaryButton(
+                child: Text('GET STARTED'),
+                onPressed: () {},
               ),
               SizedBox(
                 height: 20.0,
