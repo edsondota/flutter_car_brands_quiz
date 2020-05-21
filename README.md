@@ -24,5 +24,5 @@ And following instruction to run the app:
 $ flutter run
 ```
 
-Or just open the project on Android Studio or Visual Studio previusly configured to flutter run projects.
+Or just open the project on Android Studio or Visual Studio Code previusly configured to flutter run projects.
 
