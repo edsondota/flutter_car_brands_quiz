@@ -1,5 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_car_brands_quiz/components/primary_button.dart';
+import 'package:flutter_car_brands_quiz/mock/mock_questions.dart';
+import 'package:flutter_car_brands_quiz/models/alternative.dart';
+import 'package:flutter_car_brands_quiz/models/question.dart';
 import 'package:google_fonts/google_fonts.dart';
 
 class QuizPage extends StatefulWidget {
@@ -10,47 +13,31 @@ class QuizPage extends StatefulWidget {
 }
 
 class _QuizPageState extends State<QuizPage> {
-  var options = [];
+  var questions = mockQuestions;
+  Question currentQuestion;
+
   @override
   void initState() {
     super.initState();
-    options = [
-      {
-        'option': 'Japan',
-        'isCorrect': false,
-        'isSelected': false,
-      },
-      {
-        'option': 'Brazil',
-        'isCorrect': false,
-        'isSelected': false,
-      },
-      {
-        'option': 'France',
-        'isCorrect': false,
-        'isSelected': false,
-      },
-      {
-        'option': 'Deustach',
-        'isCorrect': false,
-        'isSelected': false,
-      },
-    ];
+    questions.shuffle();
+    currentQuestion = questions.removeLast();
+    currentQuestion.alternatives.shuffle();
   }
 
-  void updateOption(int index) {
-    if (!options[index]['isSelected']) {
-      options.forEach((element) {
-        element['isSelected'] = false;
+  void updateOption(Alternative alternative) {
+    setState(() {
+      currentQuestion.alternatives.forEach((element) {
+        element.isSelected = false;
       });
-      setState(() {
-        options[index]['isSelected'] = true;
-      });
-    } else {
-      setState(() {
-        options[index]['isSelected'] = false;
-      });
-    }
+      alternative.isSelected = !alternative.isSelected;
+    });
+  }
+
+  void confirmQuestion() {
+    setState(() {
+      currentQuestion = questions.removeLast();
+      currentQuestion.alternatives.shuffle();
+    });
   }
 
   @override
@@ -62,7 +49,7 @@ class _QuizPageState extends State<QuizPage> {
           children: <Widget>[
             Flexible(
               flex: 4,
-              child: _buildQuestion(),
+              child: _buildQuestion(currentQuestion),
             ),
             Flexible(
               flex: 6,
@@ -80,18 +67,15 @@ class _QuizPageState extends State<QuizPage> {
                     Expanded(
                       child: Column(
                         mainAxisAlignment: MainAxisAlignment.center,
-                        children: options.asMap().entries.map((entry) {
-                          var item = entry.value;
-                          return _buildAlternative(item['isSelected'], entry.key, item['option']);
-                        }).toList(),
+                        children: currentQuestion.alternatives.map((alternative) => _buildAlternative(alternative)).toList(),
                       ),
                     ),
                     Padding(
                       padding: const EdgeInsets.all(10.0),
-                      child: (options.any((item) => item['isSelected']))
+                      child: (currentQuestion.alternatives.any((alternative) => alternative.isSelected))
                           ? PrimaryButton(
                               child: Text('Confirm'),
-                              onPressed: () {},
+                              onPressed: confirmQuestion,
                             )
                           : SizedBox(
                               height: 50.0,
@@ -107,28 +91,28 @@ class _QuizPageState extends State<QuizPage> {
     );
   }
 
-  Widget _buildAlternative(bool isSelected, int key, String option) => FlatButton(
-        onPressed: () => updateOption(key),
-        color: isSelected ? Colors.black12 : Colors.transparent,
+  Widget _buildAlternative(Alternative alternative) => FlatButton(
+        onPressed: () => updateOption(alternative),
+        color: alternative.isSelected ? Colors.black12 : Colors.transparent,
         child: ListTile(
-          leading: isSelected ? Icon(Icons.label) : Icon(Icons.label_outline),
-          title: Text(option),
+          leading: alternative.isSelected ? Icon(Icons.label) : Icon(Icons.label_outline),
+          title: Text(alternative.title),
         ),
       );
 
-  Widget _buildQuestion() => Column(
+  Widget _buildQuestion(Question question) => Column(
         mainAxisAlignment: MainAxisAlignment.spaceEvenly,
         children: <Widget>[
           Center(
             child: SizedBox(
-              width: 200.0,
-              child: Image.asset('assets/mini-logo.png'),
+              width: 150.0,
+              child: Image.asset(question.imageUrl),
             ),
           ),
           Padding(
             padding: const EdgeInsets.symmetric(horizontal: 40.0),
             child: Text(
-              'This car brand is (or was) originally from which country?',
+              question.title,
               textAlign: TextAlign.center,
               style: GoogleFonts.squadaOne(fontSize: 20.0),
             ),
