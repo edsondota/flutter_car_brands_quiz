@@ -3,6 +3,7 @@ import 'package:flutter_car_brands_quiz/components/primary_button.dart';
 import 'package:flutter_car_brands_quiz/mock/mock_questions.dart';
 import 'package:flutter_car_brands_quiz/models/alternative.dart';
 import 'package:flutter_car_brands_quiz/models/question.dart';
+import 'package:flutter_car_brands_quiz/routes/result_page.dart';
 import 'package:google_fonts/google_fonts.dart';
 
 class QuizPage extends StatefulWidget {
@@ -35,6 +36,11 @@ class _QuizPageState extends State<QuizPage> {
 
   void confirmQuestion() {
     setState(() {
+      if (questions.length == 1) {
+        Navigator.pushNamed(context, ResultPage.routeName);
+        return;
+      }
+
       currentQuestion = questions.removeLast();
       currentQuestion.alternatives.shuffle();
     });
