@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_car_brands_quiz/routes/start_page.dart';
 
 void main() {
   runApp(MyApp());
@@ -9,13 +10,10 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MaterialApp(
       title: 'Car Brands Quiz',
-      theme: ThemeData(
-        primarySwatch: Colors.blue,
-        visualDensity: VisualDensity.adaptivePlatformDensity,
-      ),
-      home: Container(
-        color: Colors.white,
-      ),
+      initialRoute: StartPage.routeName,
+      routes: {
+        StartPage.routeName: (context) => StartPage(),
+      },
     );
   }
 }
