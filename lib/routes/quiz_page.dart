@@ -14,15 +14,26 @@ class QuizPage extends StatefulWidget {
 }
 
 class _QuizPageState extends State<QuizPage> {
-  var questions = mockQuestions;
+  List<Question> questions;
   Question currentQuestion;
 
   @override
   void initState() {
     super.initState();
+    questions = _getQuestions();
     questions.shuffle();
     currentQuestion = questions.removeLast();
     currentQuestion.alternatives.shuffle();
+  }
+
+  List<Question> _getQuestions() {
+    var questions = List<Question>.from(mockQuestions);
+    questions.forEach((question) {
+      question.alternatives.forEach((alternative) {
+        alternative.isSelected = false;
+      });
+    });
+    return questions;
   }
 
   void updateOption(Alternative alternative) {
