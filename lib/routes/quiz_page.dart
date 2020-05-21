@@ -61,26 +61,9 @@ class _QuizPageState extends State<QuizPage> {
         child: Column(
           children: <Widget>[
             Flexible(
-                flex: 4,
-                child: Column(
-                  mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                  children: <Widget>[
-                    Center(
-                      child: SizedBox(
-                        width: 200.0,
-                        child: Image.asset('assets/mini-logo.png'),
-                      ),
-                    ),
-                    Padding(
-                      padding: const EdgeInsets.symmetric(horizontal: 40.0),
-                      child: Text(
-                        'This car brand is (or was) originally from which country?',
-                        textAlign: TextAlign.center,
-                        style: GoogleFonts.squadaOne(fontSize: 20.0),
-                      ),
-                    ),
-                  ],
-                )),
+              flex: 4,
+              child: _buildQuestion(),
+            ),
             Flexible(
               flex: 6,
               child: Container(
@@ -99,14 +82,7 @@ class _QuizPageState extends State<QuizPage> {
                         mainAxisAlignment: MainAxisAlignment.center,
                         children: options.asMap().entries.map((entry) {
                           var item = entry.value;
-                          return FlatButton(
-                            onPressed: () => updateOption(entry.key),
-                            color: item['isSelected'] ? Colors.black12 : Colors.transparent,
-                            child: ListTile(
-                              leading: item['isSelected'] ? Icon(Icons.label) : Icon(Icons.label_outline),
-                              title: Text(item['option']),
-                            ),
-                          );
+                          return _buildAlternative(item['isSelected'], entry.key, item['option']);
                         }).toList(),
                       ),
                     ),
@@ -130,4 +106,33 @@ class _QuizPageState extends State<QuizPage> {
       ),
     );
   }
+
+  Widget _buildAlternative(bool isSelected, int key, String option) => FlatButton(
+        onPressed: () => updateOption(key),
+        color: isSelected ? Colors.black12 : Colors.transparent,
+        child: ListTile(
+          leading: isSelected ? Icon(Icons.label) : Icon(Icons.label_outline),
+          title: Text(option),
+        ),
+      );
+
+  Widget _buildQuestion() => Column(
+        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+        children: <Widget>[
+          Center(
+            child: SizedBox(
+              width: 200.0,
+              child: Image.asset('assets/mini-logo.png'),
+            ),
+          ),
+          Padding(
+            padding: const EdgeInsets.symmetric(horizontal: 40.0),
+            child: Text(
+              'This car brand is (or was) originally from which country?',
+              textAlign: TextAlign.center,
+              style: GoogleFonts.squadaOne(fontSize: 20.0),
+            ),
+          ),
+        ],
+      );
 }
