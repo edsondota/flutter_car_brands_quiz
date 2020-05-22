@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_car_brands_quiz/components/primary_button.dart';
 import 'package:flutter_car_brands_quiz/routes/quiz_page.dart';
+import 'package:flutter_car_brands_quiz/shared/constants.dart';
 
 class StartPage extends StatelessWidget {
   static String routeName = 'start_page';
@@ -29,7 +30,10 @@ class StartPage extends StatelessWidget {
                 ),
               ),
               PrimaryButton(
-                child: Text('GET STARTED'),
+                child: Text(
+                  'GET STARTED',
+                  style: body1,
+                ),
                 onPressed: () => Navigator.pushNamed(context, QuizPage.routeName),
               ),
             ],
