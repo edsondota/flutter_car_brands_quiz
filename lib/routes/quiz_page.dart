@@ -3,7 +3,8 @@ import 'package:flutter_car_brands_quiz/components/primary_button.dart';
 import 'package:flutter_car_brands_quiz/mock/mock_questions.dart';
 import 'package:flutter_car_brands_quiz/models/alternative.dart';
 import 'package:flutter_car_brands_quiz/models/question.dart';
-import 'package:google_fonts/google_fonts.dart';
+import 'package:flutter_car_brands_quiz/routes/result_page.dart';
+import 'package:flutter_car_brands_quiz/shared/constants.dart';
 
 class QuizPage extends StatefulWidget {
   static String routeName = 'quiz_page';
@@ -13,15 +14,28 @@ class QuizPage extends StatefulWidget {
 }
 
 class _QuizPageState extends State<QuizPage> {
-  var questions = mockQuestions;
+  List<Question> questions;
+  List<Question> answeredQuestions = [];
   Question currentQuestion;
 
   @override
   void initState() {
     super.initState();
+    answeredQuestions = [];
+    questions = _getQuestions();
     questions.shuffle();
     currentQuestion = questions.removeLast();
     currentQuestion.alternatives.shuffle();
+  }
+
+  List<Question> _getQuestions() {
+    var questions = List<Question>.from(mockQuestions);
+    questions.forEach((question) {
+      question.alternatives.forEach((alternative) {
+        alternative.isSelected = false;
+      });
+    });
+    return questions;
   }
 
   void updateOption(Alternative alternative) {
@@ -34,7 +48,17 @@ class _QuizPageState extends State<QuizPage> {
   }
 
   void confirmQuestion() {
+    answeredQuestions.add(currentQuestion);
     setState(() {
+      if (questions.length == 1) {
+        Navigator.pushNamed(
+          context,
+          ResultPage.routeName,
+          arguments: answeredQuestions,
+        );
+        return;
+      }
+
       currentQuestion = questions.removeLast();
       currentQuestion.alternatives.shuffle();
     });
@@ -74,7 +98,10 @@ class _QuizPageState extends State<QuizPage> {
                       padding: const EdgeInsets.all(10.0),
                       child: (currentQuestion.alternatives.any((alternative) => alternative.isSelected))
                           ? PrimaryButton(
-                              child: Text('Confirm'),
+                              child: Text(
+                                'Confirm',
+                                style: body1,
+                              ),
                               onPressed: confirmQuestion,
                             )
                           : SizedBox(
@@ -96,7 +123,10 @@ class _QuizPageState extends State<QuizPage> {
         color: alternative.isSelected ? Colors.black12 : Colors.transparent,
         child: ListTile(
           leading: alternative.isSelected ? Icon(Icons.label) : Icon(Icons.label_outline),
-          title: Text(alternative.title),
+          title: Text(
+            alternative.title,
+            style: body1,
+          ),
         ),
       );
 
@@ -114,7 +144,7 @@ class _QuizPageState extends State<QuizPage> {
             child: Text(
               question.title,
               textAlign: TextAlign.center,
-              style: GoogleFonts.squadaOne(fontSize: 20.0),
+              style: body1,
             ),
           ),
         ],

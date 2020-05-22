@@ -10,7 +10,7 @@ class StartPage extends StatelessWidget {
     return Scaffold(
       body: SafeArea(
         child: Padding(
-          padding: const EdgeInsets.symmetric(horizontal: 20.0),
+          padding: const EdgeInsets.all(20.0),
           child: Column(
             mainAxisAlignment: MainAxisAlignment.center,
             crossAxisAlignment: CrossAxisAlignment.center,
@@ -32,9 +32,6 @@ class StartPage extends StatelessWidget {
                 child: Text('GET STARTED'),
                 onPressed: () => Navigator.pushNamed(context, QuizPage.routeName),
               ),
-              SizedBox(
-                height: 20.0,
-              )
             ],
           ),
         ),
