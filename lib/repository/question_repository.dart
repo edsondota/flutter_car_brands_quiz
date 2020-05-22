@@ -9,7 +9,6 @@ class QuestionRepository {
   ApiProvider _provider = ApiProvider();
 
   Future<List<Question>> fetchQuestions(String baseUrl) async {
-    print(baseUrl);
     final response = await _provider.get("$baseUrl/questions");
     final parsed = jsonDecode(response).cast<Map<String, dynamic>>();
 
