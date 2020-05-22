@@ -1,0 +1,54 @@
+{
+  "questions": [
+    {
+      "title": "This car brand is originally from which country?",
+      "imageUrl": "assets/bmw-logo.png",
+      "alternatives": [
+        { "title": "England" },
+        { "title": "USA" },
+        { "title": "Germany", "isCorrect": true },
+        { "title": "Japan" }
+      ]
+    },
+    {
+      "title": "This car brand is originally from which country?",
+      "imageUrl": "assets/toyota-logo.png",
+      "alternatives": [
+        { "title": "England" },
+        { "title": "USA" },
+        { "title": "Germany" },
+        { "title": "Japan", "isCorrect": true }
+      ]
+    },
+    {
+      "title": "This car brand is originally from which country?",
+      "imageUrl": "assets/mini-logo.png",
+      "alternatives": [
+        { "title": "England", "isCorrect": true },
+        { "title": "USA" },
+        { "title": "Germany" },
+        { "title": "Japan" }
+      ]
+    },
+    {
+      "title": "This car brand is originally from which country?",
+      "imageUrl": "assets/general-motors-logo.png",
+      "alternatives": [
+    { "title": "England" },
+    { "title": "USA", "isCorrect": true },
+    { "title": "Germany" },
+    { "title": "Japan" }
+      ]
+    },
+    {
+      "title": "This car brand is originally from which country?",
+      "imageUrl": "assets/rolls-royce-logo.png",
+      "alternatives": [
+        { "title": "England", "isCorrect": true },
+        { "title": "USA" },
+        { "title": "Germany" },
+        { "title": "Japan" }
+      ]
+    }
+  ]
+}
