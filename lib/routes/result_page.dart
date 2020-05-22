@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_car_brands_quiz/components/primary_button.dart';
+import 'package:flutter_car_brands_quiz/models/question.dart';
+import 'package:flutter_car_brands_quiz/models/result_status.dart';
 import 'package:flutter_car_brands_quiz/routes/quiz_page.dart';
 import 'package:flutter_car_brands_quiz/shared/constants.dart';
 import 'package:google_fonts/google_fonts.dart';
@@ -7,8 +9,34 @@ import 'package:google_fonts/google_fonts.dart';
 class ResultPage extends StatelessWidget {
   static String routeName = 'result_page';
 
+  double _getScore(List<Question> answeredQuestions) {
+    int score = 0;
+    answeredQuestions.forEach((question) {
+      var isCorrect = question.alternatives.any((alternative) => alternative.isSelected == alternative.isCorrect && alternative.isSelected);
+      if (isCorrect) {
+        score++;
+      }
+    });
+
+    double scorePercent = (score / answeredQuestions.length);
+
+    return scorePercent;
+  }
+
+  ResultStatus _getStatus(double score) {
+    if (score == 1) return ResultStatus.excellent;
+    if (score > 0.5) return ResultStatus.good;
+    if (score > 0) return ResultStatus.bad;
+
+    return ResultStatus.bad;
+  }
+
   @override
   Widget build(BuildContext context) {
+    final answeredQuestions = ModalRoute.of(context).settings.arguments;
+    final score = _getScore(answeredQuestions) * 100;
+    final scoreStatus = _getStatus(score);
+
     return Scaffold(
       backgroundColor: Color(0xFFF2F2F2),
       body: SafeArea(
@@ -27,7 +55,7 @@ class ResultPage extends StatelessWidget {
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: <Widget>[
                       Text(
-                        '70%',
+                        '${score.toInt()}%',
                         style: GoogleFonts.squadaOne(
                           fontSize: 80.0,
                         ),
@@ -44,7 +72,7 @@ class ResultPage extends StatelessWidget {
                           child: Row(
                             children: <Widget>[
                               Flexible(
-                                flex: 70,
+                                flex: score.toInt(),
                                 child: Container(
                                   decoration: BoxDecoration(
                                     color: Colors.green,
@@ -56,7 +84,7 @@ class ResultPage extends StatelessWidget {
                                 ),
                               ),
                               Flexible(
-                                flex: 30,
+                                flex: (100 - score.toInt()),
                                 child: Container(),
                               ),
                             ],
@@ -66,8 +94,8 @@ class ResultPage extends StatelessWidget {
                       Padding(
                         padding: const EdgeInsets.all(20.0),
                         child: Text(
-                          'Lorem ipsum dolor sit amet!',
-                          style: GoogleFonts.squadaOne(fontSize: 18.0),
+                          scoreStatus.description(),
+                          style: body1,
                           textAlign: TextAlign.center,
                         ),
                       ),
@@ -77,7 +105,10 @@ class ResultPage extends StatelessWidget {
               ),
               SizedBox(height: 40.0),
               PrimaryButton(
-                child: Text('PLAY AGAIN'),
+                child: Text(
+                  'PLAY AGAIN',
+                  style: body1,
+                ),
                 onPressed: () => Navigator.pushNamed(context, QuizPage.routeName),
               ),
             ],
