@@ -10,4 +10,11 @@ class Question {
     this.imageUrl,
     this.alternatives,
   });
+
+  factory Question.fromJson(Map<String, dynamic> json) {
+    return Question(
+      title: json['title'] as String,
+      imageUrl: json['imageUrl'] as String,
+    );
+  }
 }

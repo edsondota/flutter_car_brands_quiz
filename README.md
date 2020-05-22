@@ -11,6 +11,8 @@ The app is currently using the following flutter version:
 
 ## Getting Started
 
+Create an `.env` file using the `.env.template`.
+
 To install or update the project's dependencies, please run:
 
 ```
