@@ -3,13 +3,11 @@ import 'dart:io';
 import 'package:http/http.dart' as http;
 
 class ApiProvider {
-  final String _baseUrl = '';
-
   Future<dynamic> get(String url) async {
     var responseJson;
 
     try {
-      final response = await http.get(_baseUrl + url);
+      final response = await http.get(url);
       responseJson = _response(response);
     } on SocketException {
       throw FetchDataException('No internet connection');
