@@ -119,7 +119,7 @@ class _QuestionWidgetState extends State<QuestionWidget> {
                   child: (currentQuestion.alternatives.any((alternative) => alternative.isSelected))
                       ? PrimaryButton(
                           child: Text(
-                            'Confirm',
+                            'CONFIRM',
                             style: body1,
                           ),
                           onPressed: confirmQuestion,

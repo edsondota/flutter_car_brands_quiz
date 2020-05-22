@@ -11,16 +11,16 @@ class MockQuestionRepository extends Mock implements QuestionRepository {}
 QuestionRepository questionRepository;
 
 void main() {
-  setUp(() async {});
+  setUp(() async {
+    await DotEnv().load('.env');
+    questionRepository = MockQuestionRepository();
+
+    when(questionRepository.fetchQuestions(DotEnv().env['BASE_URL'])).thenAnswer((_) async => Future.value(mockQuestions));
+  });
 
   testWidgets(
     'Test quiz page loads questions',
     (WidgetTester tester) async {
-      await DotEnv().load('.env');
-      questionRepository = MockQuestionRepository();
-
-      when(questionRepository.fetchQuestions(DotEnv().env['BASE_URL'])).thenAnswer((_) async => Future.value(mockQuestions));
-
       final widget = QuizTestWidget(questionRepository);
 
       await tester.pumpWidget(widget);
@@ -31,6 +31,26 @@ void main() {
 
       final textFinder = find.text('USA');
       expect(textFinder, findsOneWidget);
+    },
+  );
+
+  testWidgets(
+    'When the user taps the alternative'
+    'show the confirm button',
+    (WidgetTester tester) async {
+      final widget = QuizTestWidget(questionRepository);
+
+      await tester.pumpWidget(widget);
+      await tester.pump();
+
+      final textFinder = find.text('USA');
+
+      await tester.tap(textFinder);
+
+      await tester.pump();
+
+      final confirmButton = find.text('CONFIRM');
+      expect(confirmButton, findsOneWidget);
     },
   );
 }
