@@ -28,3 +28,10 @@ $ flutter run
 
 Or just open the project on Android Studio or Visual Studio Code previusly configured to flutter run projects.
 
+### Tests
+
+To run tests:
+
+```
+$ flutter test
+```
