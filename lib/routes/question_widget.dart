@@ -73,7 +73,12 @@ class _QuestionWidgetState extends State<QuestionWidget> {
           Center(
             child: SizedBox(
               width: 150.0,
-              child: Image.asset(question.imageUrl),
+              child: Image.network(
+                question.imageUrl,
+                loadingBuilder: (context, child, progress) {
+                  return progress == null ? child : CircularProgressIndicator();
+                },
+              ),
             ),
           ),
           Padding(
