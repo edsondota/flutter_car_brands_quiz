@@ -41,7 +41,7 @@ class _QuestionWidgetState extends State<QuestionWidget> {
   void confirmQuestion() {
     answeredQuestions.add(currentQuestion);
     setState(() {
-      if (widget.questions.length == 1) {
+      if (widget.questions.length <= 1) {
         Navigator.pushNamed(
           context,
           ResultPage.routeName,

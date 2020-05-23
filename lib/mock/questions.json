@@ -2,7 +2,7 @@
   "questions": [
     {
       "title": "This car brand is originally from which country?",
-      "imageUrl": "http://127.0.0.1:8080/bmw-logo.png",
+      "imageUrl": "https://localhost:5001/images/bmw-logo.png",
       "alternatives": [
         { "title": "England" },
         { "title": "USA" },
@@ -12,7 +12,7 @@
     },
     {
       "title": "This car brand is originally from which country?",
-      "imageUrl": "http://127.0.0.1:8080/toyota-logo.png",
+      "imageUrl": "https://localhost:5001/images/toyota-logo.png",
       "alternatives": [
         { "title": "England" },
         { "title": "USA" },
@@ -22,7 +22,7 @@
     },
     {
       "title": "This car brand is originally from which country?",
-      "imageUrl": "http://127.0.0.1:8080/mini-logo.png",
+      "imageUrl": "https://localhost:5001/images/mini-logo.png",
       "alternatives": [
         { "title": "England", "isCorrect": true },
         { "title": "USA" },
@@ -32,7 +32,7 @@
     },
     {
       "title": "This car brand is originally from which country?",
-      "imageUrl": "http://127.0.0.1:8080/general-motors-logo.png",
+      "imageUrl": "https://localhost:5001/images/general-motors-logo.png",
       "alternatives": [
     { "title": "England" },
     { "title": "USA", "isCorrect": true },
@@ -42,7 +42,7 @@
     },
     {
       "title": "This car brand is originally from which country?",
-      "imageUrl": "http://127.0.0.1:8080/rolls-royce-logo.png",
+      "imageUrl": "https://localhost:5001/images/rolls-royce-logo.png",
       "alternatives": [
         { "title": "England", "isCorrect": true },
         { "title": "USA" },
