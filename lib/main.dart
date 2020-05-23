@@ -1,6 +1,12 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_car_brands_quiz/repository/question_repository.dart';
+import 'package:flutter_car_brands_quiz/routes/quiz_page.dart';
+import 'package:flutter_car_brands_quiz/routes/result_page.dart';
+import 'package:flutter_car_brands_quiz/routes/start_page.dart';
+import 'package:flutter_dotenv/flutter_dotenv.dart';
 
-void main() {
+Future main() async {
+  await DotEnv().load('.env');
   runApp(MyApp());
 }
 
@@ -9,13 +15,12 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MaterialApp(
       title: 'Car Brands Quiz',
-      theme: ThemeData(
-        primarySwatch: Colors.blue,
-        visualDensity: VisualDensity.adaptivePlatformDensity,
-      ),
-      home: Container(
-        color: Colors.white,
-      ),
+      initialRoute: StartPage.routeName,
+      routes: {
+        StartPage.routeName: (context) => StartPage(),
+        QuizPage.routeName: (context) => QuizPage(questionRepository: QuestionRepository()),
+        ResultPage.routeName: (context) => ResultPage(),
+      },
     );
   }
 }
